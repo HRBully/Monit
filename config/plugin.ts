@@ -31,9 +31,10 @@ export const pluginList: plugin[] = debugFilter([
   { icon: '🔘', name: 'count', size: [2, 2], description: '计数' },
   { icon: '💬', name: 'chat', size: [4, 4], description: '问答', debug: true },
   { icon: '🤖', name: 'vtube', size: [4, 3], description: '跟踪', debug: true },
-  { icon: '⛅', name: 'weather', size: [4, 2], description: '天气', debug: true },
+  { icon: '⛅', name: 'weather', size: [4, 2], dscription: '天气', debug: true },
   { icon: '📺', name: 'bilibili', size: [2, 2], description: '监控', debug: true },
-  { icon: '📅', name: 'course', size: [4, 3], description: '课表', debug: true }
+  { icon: '📅', name: 'course', size: [4, 3], description: '课表', debug: true },
+  { icon: '📅', name: 'calendar', size: [4, 4], description: '日历', debug: true }
 ])
 
 // 判断插件存在

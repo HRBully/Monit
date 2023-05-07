@@ -66,6 +66,7 @@
           <input
             v-else-if="item.type === 'text'"
             :id="item.id"
+            :placeholder="item.notice"
             type="text"
             class="w-3/5 rounded border-none px-2 py-1 text-right text-xs outline-none"
             v-model.lazy="store[item.id]"
@@ -99,6 +100,7 @@ interface Props {
         id: string
         label: string
         type: 'text' | 'checkbox'
+        notice?: string
         help?: string
       }
     | {
