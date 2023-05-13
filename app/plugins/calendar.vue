@@ -2,8 +2,19 @@
   <Setting :setting="setting" :store="store" />
   <Modal type="form" :isOpen="isOpen" :setting="setting" @cancel="closeModal" @save="onSave"></Modal>
   <article class="p-4 pt-5">
-    <div class="mt-3 flex">
-      <button class="btn btn-md btn-purple" @click="openModal">添加日程</button>
+    <!-- 操作区域 -->
+    <div class="mt-5 flex justify-between">
+      <button class="btn btn-md btn-purple btn-purple-700" @click="openModal">添加日程</button>
+      <button class="btn btn-md btn-blue btn-blue-700" @click="openModal">切换日程</button>
+      <button class="btn btn-md btn-amber btn-amber-700" @click="openModal">今日日程</button>
+    </div>
+    <div class="mt-3 flex flex-col">
+      <div class="w-200 text-primary flex justify-between" v-for="item in tasks">
+        <div>{{ item.title }}</div>
+        <div>
+          <button class="btn btn-md btn-red hover:bg-red-700">删除</button>
+        </div>
+      </div>
     </div>
   </article>
 </template>
@@ -18,7 +29,7 @@ import Modal from '@/components/modal.vue'
 const today = ref(getNowDate())
 const setting = reactive([
   {
-    id: 'notice',
+    id: 'date',
     label: '日期',
     type: 'text',
     notice: today.value
@@ -44,12 +55,33 @@ const openModal = () => {
 const closeModal = () => {
   isOpen.value = false
 }
-
-const store = storage({})
+// 待办响应式存储
+const taskMap = new Map()
+taskMap.set('2023-07-11', {
+  title: '任务1',
+  content: '任务1内容'
+})
+const store = storage({
+  taskMap
+})
+console.log(store.taskMap, taskMap)
 // 保存内容
-const onSave = () => {
+const onSave = (form) => {
   isOpen.value = false
+  console.log(store.taskMap)
 }
+
+// 当日任务
+const tasks = reactive([
+  {
+    title: '任务1',
+    content: '任务1内容'
+  },
+  {
+    title: '任务2',
+    content: '任务2内容'
+  }
+])
 
 onMounted(() => {})
 </script>

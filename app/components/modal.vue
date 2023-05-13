@@ -1,3 +1,4 @@
+import { onMounted } from 'vue';
 <!--
  * @Author: HRBully
  * @Date: 2023-05-7 20:32:45
@@ -24,6 +25,7 @@
             :id="item.id"
             :placeholder="item.notice"
             :type="item.type"
+            v-model.lazy="form[item.id]"
             class="w-3/3 rounded border-none px-2 py-1 text-right text-xs outline-none"
             @keyup.enter="onSave" />
         </li>
@@ -37,6 +39,8 @@
   </transition>
 </template>
 <script setup lang="ts">
+import { onMounted, defineProps, reactive } from 'vue'
+import { set } from '../../lib/storage'
 interface Props {
   // 尺寸
   size?: 'small' | 'normal' | 'large'
@@ -78,23 +82,33 @@ interface Props {
       }
   )[]
 }
-
 // 初始化参数
-withDefaults(defineProps<Props>(), {
-  size: 'normal'
+const props = withDefaults(defineProps<Props>(), {
+  size: 'normal',
+  type: 'form',
+  setting: Array
 })
+
+// 表单值
+const form: any = reactive({})
+// 根据props.setting初始化表单值
+for (const item of props.setting) {
+  form[item.id] = null
+}
 
 // 自定义事件
 const emit = defineEmits(['save', 'cancel'])
 
 // 保存/确定
 const onSave = () => {
-  emit('save')
+  console.log(form)
+  emit('save', form)
 }
-
 // 取消
 const onCancel = () => {
   emit('cancel')
 }
+
+onMounted(() => {})
 </script>
 <style scoped></style>
